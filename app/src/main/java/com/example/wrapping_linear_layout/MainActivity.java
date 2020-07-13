@@ -22,22 +22,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final LinearLayout verticalLinearLayout = findViewById(R.id.verticalLinearLayout);
-
-        verticalLinearLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                wrappingLinearLayout(
+        wrappingLinearLayout(
                         viewAdapterArrayList(textViewArrayListForExample()),
                         verticalLinearLayout,
                         MainActivity.this);
-            }
-        });
     }
 
     void wrappingLinearLayout(@NotNull ArrayList<LinearLayout> views, LinearLayout verticalLinearLayout, Context context) {
         ArrayList<LinearLayout> horizontalLinearLayouts = new ArrayList<>();
         LinearLayout horizontalLinearLayout = new LinearLayout(context);
         horizontalLinearLayouts.add(horizontalLinearLayout);
+
+        verticalLinearLayout.measure(0,0);
 
         int totalWidthOfViews = 0;
 
