@@ -2,15 +2,12 @@ package com.example.wrapping_linear_layout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -21,41 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final LinearLayout verticalLinearLayout = findViewById(R.id.verticalLinearLayout);
-        wrappingLinearLayout(
-                        viewAdapterArrayList(textViewArrayListForExample()),
-                        verticalLinearLayout,
-                        MainActivity.this);
-    }
-
-    void wrappingLinearLayout(@NotNull ArrayList<LinearLayout> views, LinearLayout verticalLinearLayout, Context context) {
-        ArrayList<LinearLayout> horizontalLinearLayouts = new ArrayList<>();
-        LinearLayout horizontalLinearLayout = new LinearLayout(context);
-        horizontalLinearLayouts.add(horizontalLinearLayout);
-
-        verticalLinearLayout.measure(0,0);
-
-        int totalWidthOfViews = 0;
-
-        for (LinearLayout view : views) {
-
-            view.measure(0, 0);
-            int currentViewWidth  = view.getMeasuredWidth();
-
-            if (totalWidthOfViews + view.getMeasuredWidth() > verticalLinearLayout.getMeasuredWidth()) {
-                horizontalLinearLayout = new LinearLayout(context);
-                horizontalLinearLayouts.add(horizontalLinearLayout);
-                totalWidthOfViews = 0;
-            }
-
-            totalWidthOfViews += currentViewWidth;
-
-            horizontalLinearLayout.addView(view);
-        }
-
-        for (LinearLayout linearLayout : horizontalLinearLayouts) {
-            verticalLinearLayout.addView(linearLayout);
-        }
+        new WrappingLinearLayout(
+                viewAdapterArrayList(textViewArrayListForExample()),
+                (LinearLayout) findViewById(R.id.verticalLinearLayout),
+                this);
     }
 
     private ArrayList<LinearLayout> viewAdapterArrayList(ArrayList<TextView> textViews) {
