@@ -1,11 +1,7 @@
 package com.example.wrapping_linear_layout;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,29 +15,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new WrappingLinearLayout(
-                viewAdapterArrayList(textViewArrayListForExample()),
+                viewAdapterArrayList(),
                 (LinearLayout) findViewById(R.id.verticalLinearLayout),
                 this);
     }
 
-    private ArrayList<LinearLayout> viewAdapterArrayList(ArrayList<TextView> textViews) {
-        ArrayList<LinearLayout> views = new ArrayList<>();
-        for (TextView textView : textViews) {
-            LinearLayout linearLayout = new LinearLayout(this);
-            linearLayout.addView(textView);
-            views.add(linearLayout);
-        }
-        return views;
-    }
-
-    private ArrayList<TextView> textViewArrayListForExample() {
-        ArrayList<TextView> textViews = new ArrayList<>();
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
+    private ArrayList<LinearLayout> viewAdapterArrayList() {
+        ArrayList<LinearLayout> linearLayouts = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
-            TextView textView = new TextView(this);
+            LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.text_view_reusable, null);
+            TextView textView = (TextView) linearLayout.findViewById(R.id.text_view_reuseable);
             textView.setText("View " + i + " |");
             if (i < 20) {
                 if (i % 5 == 0) {
@@ -52,14 +35,8 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("View very long view that is so long it's really long " + i + " |");
                 }
             }
-            textView.setMaxLines(1);
-            textView.setBackground(new ColorDrawable(Color.BLUE));
-            textView.setTextColor(Color.WHITE);
-            textView.setLayoutParams(layoutParams);
-            textView.setPadding(20, 2, 20, 2);
-            layoutParams.setMargins(10, 2, 10, 2);
-            textViews.add(textView);
+            linearLayouts.add(linearLayout);
         }
-        return textViews;
+        return linearLayouts;
     }
 }

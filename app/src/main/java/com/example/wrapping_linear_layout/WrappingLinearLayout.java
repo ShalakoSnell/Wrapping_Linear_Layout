@@ -16,7 +16,6 @@ public class WrappingLinearLayout {
                 execute(views, verticalLinearLayout, context);
             }
         });
-
     }
 
     private void execute(@NotNull ArrayList<LinearLayout> views, @NotNull final LinearLayout verticalLinearLayout, @NotNull final Context context) {
